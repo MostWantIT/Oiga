@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Oiga</title>
   <link rel="stylesheet" href="/oiga.css" />
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,900|PT+Mono|PT+Sans:400,700" rel="stylesheet">
@@ -29,6 +30,7 @@
     }
     header h1 {
       text-shadow: 5px 5px 0px #888;
+      filter: drop-shadow(2px 2px 5px rgba(0, 0, 0, 0.3));
     }
     header h2 {
       font-size: 40px;
@@ -127,7 +129,7 @@
   <section>
     <h1>Example</h1>
     <pre><code>
-&lt;script async src=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga-0.0.1/oiga-0.0.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script async src=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga/oiga.min.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
     var trackingId = &#39;UA-XXXXXXX-X&#39;;
     window.oigaLayer = window.oigaLayer || [];
@@ -137,13 +139,13 @@
     oiga(&#39;config&#39;, trackingId, { &#39;anonymize_ip&#39;: true });
 &lt;/script&gt;</code></pre>
     <h2>Stylesheet</h2>
-    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga-0.0.1/oiga-0.0.1.css&quot; /&gt;</code></pre>
+    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga/oiga.css&quot; /&gt;</code></pre>
     <p>
       <code>oigaLayer</code> and <code>oiga</code> can be used instead of
       <code>dataLayer</code> and <code>gtag</code> to make sure no events are
       tracked before consent. For example to track an add to cart event:
     </p>
-    <pre><code>oiga(&#39;event&#39;, &#39;add_to_cart&#39;, { items: [{ &#39;id&#39;: &#39;525&#39;, name: &#39;Rubber Duck&#39;, brand: &#39;Abc Toys&#39;, &#39;price&#39;: &#39;€ 4,50&#39; }] });</code></pre>
+    <pre><code>oiga(&#39;event&#39;, &#39;add_to_cart&#39;, { items: [{ &#39;id&#39;: &#39;525&#39;, name: &#39;Rubber Duck&#39;, brand: &#39;Abc Toys&#39;, &#39;price&#39;: &#39;&euro; 4,50&#39; }] });</code></pre>
   </section>
   <section>
     <h1>Options</h1>
