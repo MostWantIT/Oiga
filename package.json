@@ -1,0 +1,18 @@
+{
+  "name": "oiga",
+  "version": "0.0.1",
+  "description": "Opt-in Google Analytics",
+  "main": "oiga.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "minify": "uglifyjs --compress --mangle -o oiga.min.js oiga.js"
+  },
+  "keywords": [
+    "GDPR"
+  ],
+  "author": "Corné Dorrestijn <contact@corne.info>",
+  "license": "ISC",
+  "dependencies": {
+    "uglify-js": "^3.3.25"
+  }
+}

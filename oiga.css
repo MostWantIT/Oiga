@@ -1,0 +1,49 @@
+.oiga {
+  background: #222;
+  color: white;
+  font-family: sans-serif;
+  text-align: left;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 20px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.oiga__message {
+  flex: 1;
+  min-width: 250px;
+}
+.oiga__message a {
+  color: white;
+}
+
+.oiga__button {
+  margin: 0 0 0 20px;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 3px;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.oiga__button:hover {
+  opacity: 0.8;
+}
+
+.oiga__button--accept {
+  background: #A5BD4D;
+}
+
+.oiga__button--deny {
+  background: #666;
+  color: white;
+}

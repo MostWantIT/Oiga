@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Oiga</title>
+  <link rel="stylesheet" href="/oiga.css" />
+  <link href="https://fonts.googleapis.com/css?family=Merriweather:300,900|PT+Mono|PT+Sans:400,700" rel="stylesheet">
+  <style>
+    body, html {
+      padding: 0;
+      margin: 0;
+      font-family: 'PT Sans', sans-serif;
+    }
+    header {
+      background: #eee;
+      display: flex;
+      min-height: 80vh;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+    header h1, header h2 {
+      font-size: 180px;
+      font-weight: normal;
+      font-family: Merriweather, serif;
+      font-weight: 900;
+      padding: 0;
+      margin: 40px;
+      color: #222;
+    }
+    header h1 {
+      text-shadow: 5px 5px 0px #888;
+    }
+    header h2 {
+      font-size: 40px;
+      font-weight: 300;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    section h1 {
+      font-size: 40px;
+      font-family: Merriweather, serif;
+      font-weight: 300;
+    }
+
+    section pre {
+      text-align: left;
+      background: #eee;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: auto;
+    }
+
+    section code {
+      font-family: 'PT Mono', monospace;
+      font-size: 16px;
+    }
+
+    section:nth-child(odd) {
+      background: #eee;
+    }
+
+    section:nth-child(odd) pre {
+      background: white;
+    }
+
+    section p {
+      font-size: 20px;
+      text-align: left;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    section ul {
+      font-size: 20px;
+      text-align: left;
+    }
+
+    .status {
+      background: orange;
+      display: inline-block;
+      padding: 10px;
+      border-radius: 3px;
+    }
+
+    .status.consent {
+      background: #A5BD4D;
+    }
+
+    .status.noconsent {
+      background: #D46E5A;
+    }
+
+    textarea {
+      width: 800px;
+      max-width: 100%;
+      min-height: 100px;
+      margin: 20px;
+    }
+
+  </style>
+  <script async src="/oiga.js"></script>
+  <script>
+      var trackingId = 'UA-9727264-15';
+      window.oigaLayer = window.oigaLayer || [];
+      function oiga(){oigaLayer.push(arguments);};
+      oiga('optin', trackingId);
+      oiga('js', new Date());
+      oiga('config', trackingId, { 'anonymize_ip': true });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="header">
+      <h1>Oiga</h1>
+      <h2>Opt-in Google Analytics</h2>
+      <p class="status pending"><strong>Status:</strong> <span>no decision on consent</span></p>
+    </div>
+  </header>
+  <section>
+    <h1>Example</h1>
+    <pre><code>
+&lt;script async src=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga-0.0.1/oiga-0.0.1.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    var trackingId = &#39;UA-XXXXXXX-X&#39;;
+    window.oigaLayer = window.oigaLayer || [];
+    function oiga(){oigaLayer.push(arguments);};
+    oiga(&#39;optin&#39;, trackingId);
+    oiga(&#39;js&#39;, new Date());
+    oiga(&#39;config&#39;, trackingId, { &#39;anonymize_ip&#39;: true });
+&lt;/script&gt;</code></pre>
+    <h2>Stylesheet</h2>
+    <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://storage.googleapis.com/mostwantit/assets/Oiga/oiga-0.0.1/oiga-0.0.1.css&quot; /&gt;</code></pre>
+    <p>
+      <code>oigaLayer</code> and <code>oiga</code> can be used instead of
+      <code>dataLayer</code> and <code>gtag</code> to make sure no events are
+      tracked before consent. For example to track an add to cart event:
+    </p>
+    <pre><code>oiga(&#39;event&#39;, &#39;add_to_cart&#39;, { items: [{ &#39;id&#39;: &#39;525&#39;, name: &#39;Rubber Duck&#39;, brand: &#39;Abc Toys&#39;, &#39;price&#39;: &#39;€ 4,50&#39; }] });</code></pre>
+  </section>
+  <section>
+    <h1>Options</h1>
+    <p>
+      Options can be passed in the third parameter, e.g.:<br/>
+      <code>oiga('optin', 'UA-XXXXXXX-X', { cookieDomain: '.example.org' })</code>
+    </p>
+
+    <h2>cookieName</h2>
+    <p>The name that is used for the cookie. (default: 'consentCookie'</p>
+    <h2>cookieDomain</h2>
+    <p>The domain where the cookie is set. (default: '.' + current host)</p>
+    <h2>cookiePath</h2>
+    <p>The path where the cookie is set. (default: '/')</p>
+    <h2>cookieExpires</h2>
+    <p>The date when the cookie expires, for example to set it to two months (the default) you can do this:</p>
+    <pre><code>
+var date = new Date();
+date.setMonth(date.getMonth() + 2);
+oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
+    </code></pre>
+    <h2>renderBar</h2>
+    <p>If the bar asking for consent should be rendered if needed. If you want to use another prompt set this to <code>false</code></p>
+    <h2>texts</h2>
+    <p>Texts contains a object with all the messages and labels:</p>
+    <ul>
+      <li>accept: the accept button label</li>
+      <li>deny: the deny button label</li>
+      <li>message: the message that is shown next to the buttons</li>
+    </ul>
+  </section>
+  <section>
+    <h1>Methods</h1>
+    <h2>oigaWithdrawConsent</h2>
+    <p>A opt-out button can use the global <code>oigaWithdrawConsent</code> function. For example in a privacy policy:</p>
+    <pre><code>&lt;p&gt;You can opt-out using this button: &lt;button onclick=&quot;oigaWithdrawConsent()&quot;&gt;Opt-out&lt;/button&gt;&lt;/p&gt;</code></pre>
+    <p>
+      Try pressing this opt-out button:
+      <button onclick="oigaWithdrawConsent()">Opt-out</button>
+    </p>
+    <h2>oigaDeleteCookie</h2>
+    <p>
+      Consent can be reset by calling the <code>oigaDeleteCookie</code> function, it will remove the consent
+      cookie and the next time the user visits the page he will be prompted again.
+    </p>
+    <p>
+      <button onclick="oigaDeleteCookie()">Delete the cookie</button>
+    </p>
+  </section>
+  <section>
+    <h1>Events</h1>
+    <h2>oigaready</h2>
+    <p>
+      This event triggers when Oiga has been initialized
+    </p>
+    <pre><code>window.addEventListener(&#39;oigaready&#39;, function() {
+  alert(oigaGetConsent() ? &#39;Has consent&#39; : &#39;No consent&#39;);
+});</code></pre>
+
+    <h2>oigaconsentchange</h2>
+    <p>This event triggers when consent changes</p>
+    <pre><code>window.addEventListener(&#39;oigaconsentchange&#39;, function(e) {
+  alert(e.detail.consent ? &#39;Has now consent&#39; : &#39;Has no longer consent&#39;);
+});</code></pre>
+  </section>
+  <script>
+    function updateStatus(consent) {
+      var status = document.querySelector('.status');
+      var statusText = status.querySelector('span');
+
+      if (consent === null) return;
+
+      if (consent) {
+        status.classList.remove('pending');
+        status.classList.remove('noconsent');
+        status.classList.add('consent');
+        statusText.textContent = 'consent given!';
+      } else {
+        status.classList.remove('pending');
+        status.classList.remove('consent');
+        status.classList.add('noconsent');
+        statusText.textContent = 'no consent given.';
+      }
+    }
+
+    window.addEventListener('oigaconsentchange', function(e) {
+      console.log('Oiga consent change');
+      updateStatus(e.detail.consent);
+    });
+
+    window.addEventListener('oigaready', function() {
+      console.log('Oiga ready');
+      updateStatus(oigaGetConsent());
+    });
+  </script>
+</body>
+</html>
