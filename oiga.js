@@ -35,8 +35,7 @@ function initOiga(global) {
   }
 
   global.oigaDeleteCookie = function oigaDeleteCookie() {
-    var expires = new Date();
-    expires.setMonth(expires.getMonth() - 100);
+    var expires = 'Thu, 01 Jan 1970 00:00:01 GMT';
     var domain = config.cookieDomain;
     var path = config.cookiePath;
     var cookieName = config.cookieName;
