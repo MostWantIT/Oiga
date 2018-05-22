@@ -9,6 +9,7 @@ function initOiga(global) {
     cookiePath: '/',
     renderBar: true,
     position: 'bottom',
+    disableGoogleAnalytics: false,
     texts: {
       'accept': 'Accepteren',
       'deny': 'Weigeren',
@@ -63,6 +64,9 @@ function initOiga(global) {
   }
 
   global.oigaLoadGtag = function oigaLoadGtag() {
+    if (config.disableGoogleAnalytics) {
+      return;
+    }
     global.oigaLoadScript('https://www.googletagmanager.com/gtag/js?id=' + config.trackingId, true);
     global.dataLayer = config.dataLayer;
     function gtag() { dataLayer.push(arguments); }
