@@ -31,6 +31,7 @@
 }
 .oiga__message a {
   color: white;
+  text-decoration: underline;
 }
 
 .oiga__buttons {
