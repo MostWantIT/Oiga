@@ -70,7 +70,6 @@ function initOiga(global) {
   }
 
   global.oigaLoadScriptOnConsent = function() {
-    console.log('ASF');
     var params = arguments;
     if (global.oigaGetConsent()) {
       global.oigaLoadScript.apply(null, params);
@@ -140,9 +139,7 @@ function initOiga(global) {
       continue;
     }
 
-    console.log('adfb', action[0]);
     if (action[0] === 'loadScript') {
-      console.log('ADF');
       var options = action[2] || {};
       global.oigaLoadScriptOnConsent(action[1], options.async !== false);
     }
