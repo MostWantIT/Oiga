@@ -8,13 +8,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 10px 20px;
+  padding: 0 20px;
 
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-end;
   z-index: 1000;
+  line-height: 1.2;
 }
 
 .oiga--top {
@@ -25,9 +26,8 @@
 .oiga__message {
   flex: 1;
   min-width: 250px;
-  margin: 0;
+  margin: 15px 0;
   padding: 0;
-  line-height: 1em;
 }
 .oiga__message a {
   color: white;
@@ -35,6 +35,7 @@
 
 .oiga__buttons {
   display: flex;
+  margin: 15px 0;
 }
 
 .oiga__button {
