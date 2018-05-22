@@ -18,7 +18,23 @@
       text-align: center;
       justify-content: center;
       align-items: center;
+      position: relative;
+      overflow: hidden;
     }
+
+    #container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+    }
+
+    .header {
+      z-index: 100;
+      pointer-events: none;
+    }
+
     header h1, header h2 {
       font-size: 180px;
       font-weight: normal;
@@ -113,13 +129,20 @@
       var trackingId = 'UA-9727264-15';
       window.oigaLayer = window.oigaLayer || [];
       function oiga(){oigaLayer.push(arguments);};
-      oiga('optin', trackingId);
+      oiga('optin', trackingId, {
+        position: 'top',
+        texts: { deny: 'Nah!' },
+      });
+      oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/sketch.min.js', { async: false });
+      oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/dat.gui.min.js', { async: false });
+      oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/js/tentacles.js', { async: false });
       oiga('js', new Date());
       oiga('config', trackingId, { 'anonymize_ip': true });
   </script>
 </head>
 <body>
   <header>
+    <div id="container"></div>
     <div class="header">
       <h1>Oiga</h1>
       <h2>Opt-in Google Analytics</h2>
@@ -146,6 +169,10 @@
       tracked before consent. For example to track an add to cart event:
     </p>
     <pre><code>oiga(&#39;event&#39;, &#39;add_to_cart&#39;, { items: [{ &#39;id&#39;: &#39;525&#39;, name: &#39;Rubber Duck&#39;, brand: &#39;Abc Toys&#39;, &#39;price&#39;: &#39;&euro; 4,50&#39; }] });</code></pre>
+    <p>
+      External scripts can be loaded with <code>loadScript</code>, by default scripts will be loaded async, but you can overwrite this in the third parameter (<code>{ async: false }</code>).
+    </p>
+    <pre><code><code>oiga('loadScript', 'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXX')</code></code></pre>
   </section>
   <section>
     <h1>Options</h1>
@@ -168,9 +195,11 @@ date.setMonth(date.getMonth() + 2);
 oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
     </code></pre>
     <h2>renderBar</h2>
-    <p>If the bar asking for consent should be rendered if needed. If you want to use another prompt set this to <code>false</code></p>
+    <p>If the bar asking for consent should be rendered if needed. If you want to use another prompt set this to <code>false</code>.</p>
+    <h2>position</h2>
+    <p>The position of the bar, this defaults to bottom and can be set to top. If the default css is not used this will not work automaticly.</p>
     <h2>texts</h2>
-    <p>Texts contains a object with all the messages and labels:</p>
+    <p>Texts contains a object with all the messages and labels. Only texts you define are overwritten.</p>
     <ul>
       <li>accept: the accept button label</li>
       <li>deny: the deny button label</li>

@@ -8,6 +8,7 @@ function initOiga(global) {
     cookieExpires: defaultExpiryDate,
     cookiePath: '/',
     renderBar: true,
+    position: 'bottom',
     texts: {
       'accept': 'Accepteren',
       'deny': 'Weigeren',
@@ -53,16 +54,32 @@ function initOiga(global) {
     global.location = global.location;
   }
 
-  global.oigaLoadGtag = function oigaLoadGtag() {
+  global.oigaLoadScript = function oigaLoadScript(src, async) {
     var head = document.getElementsByTagName('head')[0];
     var script = document.createElement('script');
-    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + config.trackingId;
-    script.async = true;
+    script.src = src;
+    script.async = async;
     head.appendChild(script);
+  }
 
+  global.oigaLoadGtag = function oigaLoadGtag() {
+    global.oigaLoadScript('https://www.googletagmanager.com/gtag/js?id=' + config.trackingId, true);
     global.dataLayer = config.dataLayer;
     function gtag() { dataLayer.push(arguments); }
     global.gtag = gtag;
+  }
+
+  global.oigaLoadScriptOnConsent = function() {
+    console.log('ASF');
+    var params = arguments;
+    if (global.oigaGetConsent()) {
+      global.oigaLoadScript.apply(null, params);
+    }
+    window.addEventListener('oigaconsentchange', function(e) {
+      if (e.detail.consent) {
+        global.oigaLoadScript.apply(null, params);
+      }
+    })
   }
 
   global.oigaShowOptin = function oigaShowOptin() {
@@ -80,14 +97,17 @@ function initOiga(global) {
     deny.addEventListener('click', function() { global.oigaSetConsent(false); document.body.removeChild(bar); });
     deny.className = 'oiga__button oiga__button--deny';
 
-    buttons.appendChild(accept);
     buttons.appendChild(deny);
+    buttons.appendChild(accept);
     buttons.className = 'oiga__buttons';
 
     message.innerHTML = config.texts.message;
     message.className = 'oiga__message';
 
-    bar.className = 'oiga';
+    bar.classList.add('oiga');
+    if (config.position === 'top') {
+      bar.classList.add('oiga--top');
+    }
 
     bar.appendChild(message);
     bar.appendChild(buttons);
@@ -105,7 +125,8 @@ function initOiga(global) {
       // get the config from the action and store it
       var trackingId = action[1] || '';
       var options = action[2] || {};
-      Object.assign(config, options);
+      var texts = Object.assign({}, config.texts, options.texts);
+      Object.assign(config, options, { texts: texts });
       config.trackingId = trackingId;
 
       // if consent has not been given or denied show the opt in, else load gtag
@@ -119,11 +140,18 @@ function initOiga(global) {
       continue;
     }
 
+    console.log('adfb', action[0]);
+    if (action[0] === 'loadScript') {
+      console.log('ADF');
+      var options = action[2] || {};
+      global.oigaLoadScriptOnConsent(action[1], options.async !== false);
+    }
+
     // store this action for gtag
     config.dataLayer.push(action);
   }
 
-  window.dispatchEvent(new Event('oigaready'));
+  window.dispatchEvent(new CustomEvent('oigaready', { detail: config }));
 }
 
 // if the document is interactive or complete we can initialize Oiga.
