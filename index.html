@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>Oiga</title>
-  <link rel="stylesheet" href="/oiga.css" />
+  <link rel="stylesheet" href="/oiga.css?v1" />
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,900|PT+Mono|PT+Sans:400,700" rel="stylesheet">
   <style>
     body, html {
@@ -35,6 +35,10 @@
       pointer-events: none;
     }
 
+    .header iframe {
+      pointer-events: all;
+    }
+
     header h1, header h2 {
       font-size: 180px;
       font-weight: normal;
@@ -51,6 +55,9 @@
     header h2 {
       font-size: 40px;
       font-weight: 300;
+    }
+    header h2 small {
+      font-size: 14px;
     }
 
     section {
@@ -136,6 +143,8 @@
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/sketch.min.js', { async: false });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/dat.gui.min.js', { async: false });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/js/tentacles.js', { async: false });
+      oiga('loadScript', 'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b03e0bda15600d9', { entity: 'AddThis' });
+      oiga('loadScript', 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0&appId=143509349012383&autoLogAppEvents=1', { entity: 'Facebook'});
       oiga('js', new Date());
       oiga('config', trackingId, { 'anonymize_ip': true });
   </script>
@@ -145,8 +154,9 @@
     <div id="container"></div>
     <div class="header">
       <h1>Oiga</h1>
-      <h2>Opt-in Google Analytics</h2>
-      <p class="status pending"><strong>Status:</strong> <span>no decision on consent</span></p>
+      <h2>Opt-in Google Analytics <small>(and more)</small></h2>
+      <p class="status pending"><strong>Status:</strong> <span>no decision on consent</span></p><br/>
+      <div class="fb-like" data-href="https://www.facebook.com/StudentsToBusiness.nl" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
     </div>
   </header>
   <section>
