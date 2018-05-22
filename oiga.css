@@ -33,6 +33,10 @@
   color: white;
 }
 
+.oiga__buttons {
+  display: flex;
+}
+
 .oiga__button {
   margin: 0 0 0 20px;
   border: none;
@@ -54,9 +58,11 @@
 .oiga__button--accept {
   background: #73C74A;
   color: #19330D;
+  order: 2;
 }
 
 .oiga__button--deny {
   background: transparent;
   color: white;
+  order: 1;
 }

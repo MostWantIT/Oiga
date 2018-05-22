@@ -11,9 +11,10 @@ function initOiga(global) {
     position: 'bottom',
     disableGoogleAnalytics: false,
     texts: {
-      'accept': 'Accepteren',
-      'deny': 'Weigeren',
-      'message': 'Gaat u akkoord met onze <a href="/privacypolicy">privacy policy</a>? En accepteerd u onze tracking cookies?'
+      accept: 'Accepteren',
+      deny: 'Weigeren',
+      message: 'Gaat u akkoord met onze <a href="/privacypolicy" data-first="true">privacy policy</a>? En accepteert u onze tracking cookies?',
+      dialogLabel: 'Cookie opt-in',
     },
     dataLayer: global.dataLayer || [],
   };
@@ -99,9 +100,10 @@ function initOiga(global) {
     deny.textContent = config.texts.deny;
     deny.addEventListener('click', function() { global.oigaSetConsent(false); document.body.removeChild(bar); });
     deny.className = 'oiga__button oiga__button--deny';
+    deny.setAttribute('data-last', 'true');
 
-    buttons.appendChild(deny);
     buttons.appendChild(accept);
+    buttons.appendChild(deny);
     buttons.className = 'oiga__buttons';
 
     message.innerHTML = config.texts.message;
@@ -111,11 +113,14 @@ function initOiga(global) {
     if (config.position === 'top') {
       bar.classList.add('oiga--top');
     }
+    bar.setAttribute('role', 'dialog');
+    bar.setAttribute('aria-label', config.texts.dialogLabel);
+    bar.setAttribute('aria-modal', 'true');
 
     bar.appendChild(message);
     bar.appendChild(buttons);
 
-    document.body.appendChild(bar);
+    document.body.insertBefore(bar, document.body.children[0]);
   }
 
   // Loop trough the oigaLayer, run the oiga actions and pass the rest

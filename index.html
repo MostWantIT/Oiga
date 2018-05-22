@@ -88,11 +88,11 @@
       font-size: 16px;
     }
 
-    section:nth-child(odd) {
+    section:nth-of-type(even) {
       background: #eee;
     }
 
-    section:nth-child(odd) pre {
+    section:nth-of-type(even) pre {
       background: white;
     }
 
@@ -138,7 +138,7 @@
       function oiga(){oigaLayer.push(arguments);};
       oiga('optin', trackingId, {
         position: 'top',
-        texts: { deny: 'Nah!' },
+        texts: { deny: 'No', accept: 'Accept' },
       });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/sketch.min.js', { async: false });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/dat.gui.min.js', { async: false });
@@ -215,8 +215,11 @@ oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
     <ul>
       <li>accept: the accept button label</li>
       <li>deny: the deny button label</li>
-      <li>message: the message that is shown next to the buttons</li>
+      <li>message: the message that is shown next to the buttons<sup>1</sup></li>
     </ul>
+    <p>
+      <sup>1</sup><code>data-first="true"</code> should be added to the first focusable item, often the privacy policy link.
+    </p>
   </section>
   <section>
     <h1>Methods</h1>
