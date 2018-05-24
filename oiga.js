@@ -1,34 +1,25 @@
 function initOiga(global) {
-  // Object.assign polyfill
-  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-  if (typeof Object.assign != 'function') {
-    // Must be writable: true, enumerable: false, configurable: true
-    Object.defineProperty(Object, "assign", {
-      value: function assign(target, varArgs) { // .length of function is 2
-        'use strict';
-        if (target == null) { // TypeError if undefined or null
-          throw new TypeError('Cannot convert undefined or null to object');
-        }
+  function objectAssign(target, varArgs) { // .length of function is 2
+    'use strict';
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
 
-        var to = Object(target);
+    var to = Object(target);
 
-        for (var index = 1; index < arguments.length; index++) {
-          var nextSource = arguments[index];
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments[index];
 
-          if (nextSource != null) { // Skip over if undefined or null
-            for (var nextKey in nextSource) {
-              // Avoid bugs when hasOwnProperty is shadowed
-              if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-                to[nextKey] = nextSource[nextKey];
-              }
-            }
+      if (nextSource != null) { // Skip over if undefined or null
+        for (var nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
           }
         }
-        return to;
-      },
-      writable: true,
-      configurable: true
-    });
+      }
+    }
+    return to;
   }
 
   var defaultExpiryDate = new Date();
@@ -89,11 +80,11 @@ function initOiga(global) {
   }
 
   global.oigaLoadScript = function oigaLoadScript(src, async) {
-    var head = document.getElementsByTagName('head')[0];
+    var body = document.getElementsByTagName('body')[0];
     var script = document.createElement('script');
     script.src = src;
     script.async = async;
-    head.appendChild(script);
+    body.appendChild(script);
   }
 
   global.oigaLoadGtag = function oigaLoadGtag() {
@@ -165,8 +156,8 @@ function initOiga(global) {
       // get the config from the action and store it
       var trackingId = action[1] || '';
       var options = action[2] || {};
-      var texts = Object.assign({}, config.texts, options.texts);
-      Object.assign(config, options, { texts: texts });
+      var texts = objectAssign({}, config.texts, options.texts);
+      objectAssign(config, options, { texts: texts });
       config.trackingId = trackingId;
 
       // if consent has not been given or denied show the opt in, else load gtag
@@ -192,14 +183,22 @@ function initOiga(global) {
   window.dispatchEvent(new CustomEvent('oigaready', { detail: config }));
 }
 
-// if the document is interactive or complete we can initialize Oiga.
-if (
-  document.readyState === 'interactive' ||
-  document.readyState === 'complete'
-) {
-  initOiga(window);
-} else {
+function domIsReady () {
+  var isIe = !(!document.attachEvent || typeof document.attachEvent === "undefined");
+  if (isIe) {
+    document.attachEvent('onreadystatechange', function() {
+      if (document.readyState === 'complete') {
+        initOiga(window);
+      }
+    });
+  } else if(document.readyState === 'interactive' || document.readyState === 'complete') {
+    // the document is already loaded and it is not old IE
+    initOiga(window);
+  }
   document.addEventListener('DOMContentLoaded', function() {
     initOiga(window);
   });
+
 }
+
+domIsReady();
