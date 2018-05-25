@@ -180,6 +180,9 @@ function initOiga(global) {
     config.dataLayer.push(action);
   }
 
+  // replace oigaLayer with dataLayer so that future events are pushed to GA
+  global.oigaLayer = config.dataLayer;
+
   window.dispatchEvent(new CustomEvent('oigaready', { detail: config }));
 }
 

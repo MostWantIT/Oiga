@@ -178,13 +178,13 @@
     <p>
       <code>oigaLayer</code> and <code>oiga</code> can be used instead of
       <code>dataLayer</code> and <code>gtag</code> to make sure no events are
-      tracked before consent. For example to track an add to cart event:
+      tracked before consent. For example to track an <a href="#" class="addToCart">add to cart</a> event:
     </p>
     <pre><code>oiga(&#39;event&#39;, &#39;add_to_cart&#39;, { items: [{ &#39;id&#39;: &#39;525&#39;, name: &#39;Rubber Duck&#39;, brand: &#39;Abc Toys&#39;, &#39;price&#39;: &#39;&euro; 4,50&#39; }] });</code></pre>
     <p>
       External scripts can be loaded with <code>loadScript</code>, by default scripts will be loaded async, but you can overwrite this in the third parameter (<code>{ async: false }</code>).
     </p>
-    <pre><code><code>oiga('loadScript', 'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXX')</code></code></pre>
+    <pre><code>oiga('loadScript', 'https://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-XXXXXXXXX')</code></pre>
   </section>
   <section>
     <h1>Options</h1>
@@ -285,6 +285,12 @@ oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
     window.addEventListener('oigaready', function() {
       console.log('Oiga ready');
       updateStatus(oigaGetConsent());
+    });
+
+    document.querySelector('.addToCart').addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Added product to cart');
+      oiga('event', 'add_to_cart', { items: [{ 'id': '525', name: 'Rubber Duck', brand: 'Abc Toys', 'price': '€ 4,50' }] });
     });
   </script>
 </body>
