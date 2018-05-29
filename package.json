@@ -5,7 +5,7 @@
   "main": "oiga.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "minify": "uglifyjs --compress --mangle -o oiga.min.js oiga.js"
+    "minify": "npx uglify-js --compress --mangle -o oiga.min.js oiga.js && npx clean-css-cli -O2 oiga.css -o oiga.min.css"
   },
   "keywords": [
     "GDPR"
