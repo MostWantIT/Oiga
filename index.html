@@ -140,7 +140,7 @@
       function oiga(){oigaLayer.push(arguments);};
       oiga('optin', trackingId, {
         position: 'top',
-        texts: { deny: 'No', accept: 'Accept' },
+        texts: { deny: 'No', accept: 'Accept', policyLink: 'http://mostwantit.nl/privacyverklaring.pdf' },
       });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/sketch.min.js', { async: false });
       oiga('loadScript', 'http://soulwire.github.io/Muscular-Hydrostats/lib/dat.gui.min.js', { async: false });
@@ -218,6 +218,8 @@ oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
       <li>accept: the accept button label</li>
       <li>deny: the deny button label</li>
       <li>message: the message that is shown next to the buttons<sup>1</sup></li>
+      <li>policyLink: the link that will be used in the default message</li>
+      <li>dialogLabel: the aria label that is used in the bar</li>
     </ul>
     <p>
       <sup>1</sup><code>data-first="true"</code> should be added to the first focusable item, often the privacy policy link.

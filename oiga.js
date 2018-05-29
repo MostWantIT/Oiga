@@ -36,8 +36,9 @@ function initOiga(global) {
     texts: {
       accept: 'Accepteren',
       deny: 'Weigeren',
-      message: 'Gaat u akkoord met onze <a href="/privacypolicy" data-first="true">privacy policy</a>? En accepteert u onze tracking cookies?',
+      message: 'Gaat u akkoord met onze <a target="_blank" href="##POLICYLINK##" data-first="true">privacy policy</a>? En accepteert u onze tracking cookies?',
       dialogLabel: 'Cookie opt-in',
+      policyLink: '/privacy-policy',
     },
     dataLayer: global.dataLayer || [],
   };
@@ -129,7 +130,7 @@ function initOiga(global) {
     buttons.appendChild(deny);
     buttons.className = 'oiga__buttons';
 
-    message.innerHTML = config.texts.message;
+    message.innerHTML = config.texts.message.replace('##POLICYLINK##', config.texts.policyLink);
     message.className = 'oiga__message';
 
     bar.classList.add('oiga');
