@@ -5,7 +5,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Oiga</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/oiga.css?v1" />
+  <link rel="stylesheet" href="oiga.css" />
   <link href="https://fonts.googleapis.com/css?family=Merriweather:300,900|PT+Mono|PT+Sans:400,700" rel="stylesheet">
   <style>
     body, html {
@@ -133,7 +133,7 @@
     }
 
   </style>
-  <script async src="/oiga.js"></script>
+  <script async src="oiga.js"></script>
   <script>
       var trackingId = 'UA-9727264-15';
       window.oigaLayer = window.oigaLayer || [];
@@ -201,11 +201,9 @@
     <p>The path where the cookie is set. (default: '/')</p>
     <h2>cookieExpires</h2>
     <p>The date when the cookie expires, for example to set it to two months (the default) you can do this:</p>
-    <pre><code>
-var date = new Date();
+    <pre><code>var date = new Date();
 date.setMonth(date.getMonth() + 2);
-oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
-    </code></pre>
+oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });</code></pre>
     <h2>renderBar</h2>
     <p>If the bar asking for consent should be rendered if needed. If you want to use another prompt set this to <code>false</code>.</p>
     <h2>disableGoogleAnalytics</h2>
@@ -224,6 +222,16 @@ oiga('optin', 'UA-XXXXXXX-X', { cookieExpires: date });
     <p>
       <sup>1</sup><code>data-first="true"</code> should be added to the first focusable item, often the privacy policy link.
     </p>
+  </section>
+  <section>
+    <h1>Facebook Pixel</h1>
+    <p>
+      A Facebook Pixel can used as well. Passing <code>fbq</code> as the first parameter in the <code>oiga</code> function
+      loads the Facebook Pixel code on consent and logs the events.
+    </p>
+    <h2>Example</h2>
+    <pre><code>oiga('fbq', 'init', 'xxxxxxxxxxxxxxx');
+oiga('fbq', 'track', 'PageView');</code></pre>
   </section>
   <section>
     <h1>Methods</h1>

@@ -98,6 +98,18 @@ function initOiga(global) {
     global.gtag = gtag;
   }
 
+  global.oigaLoadFacebookPixel = function oigaLoadFacebookPixel() {
+    global.oigaLoadScriptOnConsent('https://connect.facebook.net/en_US/fbevents.js');
+    var fbq = function fbq() {
+      fbq.callMethod ? fbq.callMethod.apply(fbq, arguments) : fbq.queue.push(arguments);
+    }
+    fbq.push = fbq;
+    fbq.loaded = true;
+    fbq.version = '2.0';
+    fbq.queue = []
+    global.fbq = fbq;
+  }
+
   global.oigaLoadScriptOnConsent = function() {
     var params = arguments;
     if (global.oigaGetConsent()) {
@@ -175,6 +187,16 @@ function initOiga(global) {
     if (action[0] === 'loadScript') {
       var options = action[2] || {};
       global.oigaLoadScriptOnConsent(action[1], options.async !== false);
+    }
+
+
+    if (action[0] === 'fbq') {
+      // if the fbq function has not been created, we should load the facebook pixel script
+      if (!global.fbq) {
+        oigaLoadFacebookPixel();
+      }
+      var argumentsTail = Array.prototype.slice.call(action, 1);
+      global.fbq.apply(this, argumentsTail)
     }
 
     // store this action for gtag
